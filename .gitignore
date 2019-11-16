@@ -1,0 +1,9 @@
+public/*.*
+public/wp-admin
+public/wp-includes
+public/wp-content/*
+
+!public/wp-content/themes/
+public/wp-content/themes/*.*
+public/wp-content/themes/twentynineteen
+public/wp-content/themes/twentyseventeen

@@ -1,31 +1,33 @@
 version: "3.6"
 services: 
-  docker-wp-mariadb:
-    image: mariadb
+  docker-wp-mysql:
+    image: mysql:5.7
     ports: 
       - "8081:3306"
     environment: 
-      MYSQL_ROOT_PASSWORD: myc00lp@ssw0rd 
+      MYSQL_ROOT_PASSWORD: myc00lp@ssw0rd
   docker-wp-wordpress:
     image: wordpress
     ports: 
       - "8080:80"
     links: 
-      - docker-wp-mariadb
+      - docker-wp-mysql
     volumes: 
       - ./public:/var/www/html
     environment: 
+      WORDPRESS_DB_HOST: docker-wp-mysql:3306
+      WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: myc00lp@ssw0rd
   docker-wp-phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     ports: 
       - "8082:80"
     links: 
-      - docker-wp-mariadb
+      - docker-wp-mysql
     environment: 
       PMA_USER: root 
-      PMA_PASSWORD: myc00lp@ssw0rd 
-      PMA_HOST: mysql 
+      PMA_PASSWORD: myc00lp@ssw0rd
+      PMA_HOST: docker-wp-mysql:3306 
   docker-wp-wordmove:
     tty: true 
     depends_on: 
