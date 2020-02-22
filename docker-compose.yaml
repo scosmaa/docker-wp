@@ -7,7 +7,11 @@ services:
     environment: 
       MYSQL_ROOT_PASSWORD: myc00lp@ssw0rd
   docker-wp-wordpress:
-    image: wordpress
+    build:
+      context: ./docker
+      dockerfile: wp.dockerfile
+      # args:
+      #   remotehost: host.docker.internal
     ports: 
       - "8080:80"
     links: 
@@ -31,7 +35,9 @@ services:
   docker-wp-wordmove:
     tty: true 
     depends_on: 
-      - docker-wp-wordpress 
+      - docker-wp-wordpress
+    links: 
+      - docker-wp-mysql
     image: welaika/wordmove:php7 
     restart: on-failure:5 
     volumes: 
